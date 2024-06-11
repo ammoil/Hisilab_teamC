@@ -33,3 +33,14 @@ def get_groupsschedule():
 
     groupsschedule = [{'id': row[0], 'schedulename': row[1], 'groupnumber': row[2], 'date': row[3], 'usersid': row[4]} for row in rows]
     return jsonify(groupsschedule)
+
+def get_groupssetting():
+    conn = conn_db()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM groupssetting')
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    groupssetting = [{'id': row[0], 'groupname': row[1]} for row in rows]
+    return jsonify(groupssetting)

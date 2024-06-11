@@ -3,6 +3,7 @@
 from flask import Flask
 from .db import get_users
 from .db import get_groupsschedule
+from .db import get_groupssetting
 
 def create_app():
     app = Flask(__name__)
@@ -18,6 +19,10 @@ def create_app():
     @app.route('/groupsschedule')
     def groupsschedule():
         return get_groupsschedule() #URL変える
+
+    @app.route('/groupssetting')
+    def groupssetting():
+        return get_groupssetting() #URL変える
 
 
     return app
