@@ -1,6 +1,6 @@
 # web/app.py
 
-from flask import Flask
+from flask import Flask, render_template
 from .db import get_users
 from .db import get_groupsschedule
 from .db import get_groupssetting
@@ -10,7 +10,7 @@ def create_app():
 
     @app.route('/')
     def hello():
-        return 'Hello World!'
+        return render_template('index.html')
 
     @app.route('/users')
     def users():
