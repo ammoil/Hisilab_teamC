@@ -23,6 +23,24 @@ def create_app():
     @app.route('/groupssetting')
     def groupssetting():
         return get_groupssetting() #URL変える
+    
+    @app.route('/events')
+    def events():
+        return 'Hello World!'
+    
+    @app.route('/calendar')
+    def calendar():
+        events = [
+    {
+        'title': 'event1',
+        'date': '2024-06-15'
+    },
+    {
+        'title': 'event2',
+        'date': '2024-06-20'
+    }
+]
+        return render_template('calendar.html',events=events)
 
 
     return app
