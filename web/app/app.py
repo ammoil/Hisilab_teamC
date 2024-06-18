@@ -1,9 +1,9 @@
 # web/app.py
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request, session, redirect
 from .db import get_users
 from .db import get_groupsschedule
-from .db import get_groupssetting
+from .db import get_groupssetting, get_groupsschedule_by_group_id
 
 def create_app():
     app = Flask(__name__)
@@ -28,21 +28,25 @@ def create_app():
     def events():
         return 'Hello World!'
     
-    @app.route('/calendar')
+    @app.route('/calendar', methods=['GET', 'POST'])
     def calendar():
-        events = [
-    {
-        'title': 'event1',
-        'date': '2024-06-15'
-    },
-    {
-        'title': 'event2',
-        'date': '2024-06-20'
-    }
-]
-        return render_template('calendar.html',events=events)
-
-
+        if request.method == 'POST':
+            group_id = request.form.get('group_id')
+            selected_group_events = get_groupsschedule_by_group_id(group_id)
+            print(f"Selected group ID: {group_id}")
+            print(f"Events: {selected_group_events}")
+            my_dict = {
+                'events': selected_group_events,
+                'groups': get_groupssetting()
+            }
+        else:
+            my_dict = {
+                'events': get_groupsschedule(),
+                'groups': get_groupssetting()
+            }
+        
+        return render_template('calendar.html', my_dict=my_dict)
+        
     return app
 
 app = create_app()
