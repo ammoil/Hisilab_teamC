@@ -7,30 +7,67 @@
 </head>
 <body>
     <head>
-        (snip)
+        <form id="group-form" method="POST" action="/calendar">
+            <select name="group_id">
+                {% for group in my_dict.groups %}
+                    <option value="{{ group.id }}">
+                        {{ group.groupname }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Submit</button>
+        </form>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.css">
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.js"></script>
     </head>
     <body>
         <div id="calendar"></div>
+    
         <script>
+            document.addEventListener('DOMContentLoaded', function() {
             let calendarEl = document.getElementById('calendar');
-    
-            let calendar = new FullCalendar.Calendar(calendarEl, {
-    events: [
-    {% for event in events %}
-    {
-        title: '{{ event.title }}',
-        start: '{{ event.date }}',
-    },
-    {% endfor %}
-    ]
-});
 
-    
+            let calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: [
+                {% for event in my_dict.events %}
+                {
+                    title: '{{ event.schedulename }}',
+                    start: '{{ event.date }}',
+                },
+                {% endfor %}
+                ]
+            });
+
             calendar.render();
+        });
         </script>
     </body>
     
 </body>
 </html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.js"></script>
+    <title>Event Calendar</title>
+</head>
+<body>
+    <div id="calendar"></div>
+    <script>
+    let calendarEl = document.getElementById('calendar');
+
+    let calendar = new FullCalendar.Calendar(calendarEl, {
+    
+});
+
+    calendar.render();
+    </script>
+</body>
+</html> -->

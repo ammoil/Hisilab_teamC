@@ -20,7 +20,7 @@ def get_users():
     cursor.close()
     conn.close()
 
-    users = [{'id': row[0], 'name': row[1], 'studentnumber': row[2], 'classtype': row[3]} for row in rows]
+    users = [{'id': row[0], 'name': row[1], 'studentnumber': row[2]} for row in rows]
     return jsonify(users)
 
 def get_groupsschedule():
@@ -31,8 +31,10 @@ def get_groupsschedule():
     cursor.close()
     conn.close()
 
+    # groupsschedule = [{'id': row[0], 'schedulename': row[1], 'groupnumber': row[2], 'date': row[3], 'usersid': row[4]} for row in rows]
+    # return jsonify(groupsschedule)
     groupsschedule = [{'id': row[0], 'schedulename': row[1], 'groupnumber': row[2], 'date': row[3], 'usersid': row[4]} for row in rows]
-    return jsonify(groupsschedule)
+    return groupsschedule
 
 def get_groupssetting():
     conn = conn_db()
@@ -43,4 +45,16 @@ def get_groupssetting():
     conn.close()
 
     groupssetting = [{'id': row[0], 'groupname': row[1]} for row in rows]
-    return jsonify(groupssetting)
+    return groupssetting
+
+def get_groupsschedule_by_group_id(group_id):
+    conn = conn_db()
+    cursor = conn.cursor()
+    query = 'SELECT * FROM groupsschedule WHERE groupnumber = %s'
+    cursor.execute(query, (group_id,))
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    groupsschedule = [{'id': row[0], 'schedulename': row[1], 'groupnumber': row[2], 'date': row[3], 'usersid': row[4]} for row in rows]
+    return groupsschedule
