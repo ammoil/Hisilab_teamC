@@ -58,3 +58,16 @@ def get_groupsschedule_by_group_id(group_id):
 
     groupsschedule = [{'id': row[0], 'schedulename': row[1], 'groupnumber': row[2], 'date': row[3], 'usersid': row[4]} for row in rows]
     return groupsschedule
+
+# グループを作成する関数
+def groupssetting(group_name):
+    conn = conn_db()    # データベースに接続
+    cursor = conn.cursor()  # カーソルオブジェクトを作成
+    cursor.execute('INSERT INTO groupssetting (groupname) VALUES (%s)', (group_name,))   # SQLクエリの実行
+    # cursor.execute()では、INSERT INTO文を使って、新しいグループ名を"groupssetting"テーブルに挿入するSQLクエリを実行
+    conn.commit()   # データベース対する変更を確定
+    group_id = cursor.lastrowid # lastrowid属性を使用して自動生成されたIDを取得
+    cursor.close()  # カーソルオブジェクトを閉じる
+    conn.close()    # データベース接続を閉じる
+    #return group_id, group_name  # IDとグループ名を返す
+    return group_id
