@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, session, redirect
 from .db import get_users
 from .db import get_groupsschedule
 from .db import get_groupssetting, get_groupsschedule_by_group_id
+from .db import groupssetting
 
 def create_app():
     app = Flask(__name__)
@@ -19,10 +20,26 @@ def create_app():
     @app.route('/groupsschedule')
     def groupsschedule():
         return get_groupsschedule() #URL変える
+    
+    # グループ追加画面に進む
+    @app.route('/add_group')
+    def add_group():
+        return render_template('addGroup.html')
 
-    @app.route('/groupssetting')
-    def groupssetting():
-        return get_groupssetting() #URL変える
+    # グループ名が入力されて作成ボタンが押された場合の処理
+    @app.route('/groupssetting',methods=['POST'])
+    def groupSsetting():
+        if request.method == 'POST':
+            group_name = request.form['group_name'] # フォームから送信されたグループ名を取得
+            groupssetting(group_name)   # グループを作成するgroupssetting関数の呼び出し
+            # データを更新するために、"my_dict"にスケジュールとグループ名を入れる
+            my_dict = {
+                'events': get_groupsschedule(),
+                'groups':get_groupssetting()
+            }
+            return render_template('calendar.html', my_dict=my_dict) # "my_dict"の情報をカレンダー画面に渡す       
+        else :  # 例外処理
+            return "グループの作成に失敗しました。"
     
     @app.route('/events')
     def events():
