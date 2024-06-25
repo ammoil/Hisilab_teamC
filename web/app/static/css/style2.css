@@ -1,0 +1,39 @@
+.fc .fc-scrollgrid {
+    border-width: 0 0 0 0; /* 外側の枠線消す */
+    font-size: 20px;
+    font-weight: normal;
+  }
+  .fc-theme-standard td, .fc-theme-standard th {
+    height: 20px;/* 枠の高さ指定 */
+    border: none;/* 枠のボーダー消す */
+    padding: 0 5px 5px;
+  }
+  /*　今日の背景 */
+  .fc .fc-daygrid-day.fc-day-today {
+    background: none;
+  }
+  .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-frame {
+    background: rgba(45, 227, 197, 0.3);
+  }
+  /* 日付を枠の高さいっぱいに */
+  .fc .fc-daygrid-day-frame {
+    height: 100%;
+  }
+
+  .fc .fc-cell-shaded, .fc .fc-day-disabled {
+    background: none;
+  }
+
+  .fc {
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 5rem;
+  }
+
+  /* media queries */
+  @media (max-width: 700px) {
+    .fc {
+        padding-left: 5%;
+        padding-right: 5%;
+    }  
+  }
