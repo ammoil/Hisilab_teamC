@@ -28,7 +28,7 @@ def create_app():
 
     # グループ名が入力されて作成ボタンが押された場合の処理
     @app.route('/groupssetting',methods=['POST'])
-    def groupSsetting():
+    def groupsSetting():
         if request.method == 'POST':
             group_name = request.form['group_name'] # フォームから送信されたグループ名を取得
             groupssetting(group_name)   # グループを作成するgroupssetting関数の呼び出し
@@ -40,6 +40,11 @@ def create_app():
             return render_template('calendar.html', my_dict=my_dict) # "my_dict"の情報をカレンダー画面に渡す       
         else :  # 例外処理
             return "グループの作成に失敗しました。"
+        
+    #グループ作成したデータが保存できているかの確認用
+    @app.route('/get_groupssetting')
+    def get_groupsSetting():
+        return get_groupssetting()
     
     @app.route('/events')
     def events():
