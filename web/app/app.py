@@ -1,11 +1,11 @@
 # web/app.py
 
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, render_template, request, session, redirect,url_for, jsonify
 from .db import get_users
 from .db import get_groupsschedule
 from .db import get_groupssetting, get_groupsschedule_by_group_id
 from .db import groupssetting
-
+from .db import create_schedule
 def create_app():
     app = Flask(__name__)
 
@@ -63,9 +63,26 @@ def create_app():
             }
         
         return render_template('calendar.html', my_dict=my_dict)
-        
+
+    @app.route('/add_schedule', methods=['GET'])
+    def add_schedule_form():
+        groups = get_groupssetting()
+        return render_template('add.html', groups=groups)
+
+    @app.route('/add_schedule', methods=['POST'])
+    def add_schedule():
+        schedulename = request.form['schedulename']
+        date = request.form['date']
+        groupnumber = request.form['groupnumber']
+        studentnumber = request.form['studentnumber']
+
+        create_schedule(schedulename, date, groupnumber, studentnumber)
+        return redirect(url_for('calendar'))
+
+
     return app
 
+    
 app = create_app()
 
 if __name__ == "__main__":

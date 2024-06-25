@@ -71,3 +71,12 @@ def groupssetting(group_name):
     conn.close()    # データベース接続を閉じる
     #return group_id, group_name  # IDとグループ名を返す
     return group_id
+
+# 新しい予定を作成する関数
+def create_schedule(schedulename, date, groupnumber, studentnumber):
+    conn = conn_db()
+    cursor = conn.cursor()
+    cursor.execute('INSERT INTO groupsschedule (schedulename, groupnumber, date, usersid) VALUES (%s, %s, %s, (SELECT id FROM users WHERE studentnumber = %s))', (schedulename, groupnumber, date, studentnumber))
+    conn.commit()
+    cursor.close()
+    conn.close()
