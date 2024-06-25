@@ -72,11 +72,22 @@ def groupssetting(group_name):
     #return group_id, group_name  # IDとグループ名を返す
     return group_id
 
-# 新しい予定を作成する関数
 def create_schedule(schedulename, date, groupnumber, studentnumber):
     conn = conn_db()
     cursor = conn.cursor()
-    cursor.execute('INSERT INTO groupsschedule (schedulename, groupnumber, date, usersid) VALUES (%s, %s, %s, (SELECT id FROM users WHERE studentnumber = %s))', (schedulename, groupnumber, date, studentnumber))
-    conn.commit()
+
+    cursor.execute('SELECT id FROM users WHERE studentnumber = %s', (studentnumber,))
+    user_id_result = cursor.fetchone()
+
+    if user_id_result:
+        user_id = user_id_result[0]
+        cursor.execute(
+            'INSERT INTO groupsschedule (schedulename, groupnumber, date, usersid) VALUES (%s, %s, %s, %s)',
+            (schedulename, groupnumber, date, user_id)
+        )
+        conn.commit()
+    else:
+        raise ValueError("指定された学籍番号のユーザーが存在しません")
+
     cursor.close()
     conn.close()

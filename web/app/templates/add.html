@@ -9,8 +9,21 @@
 <body>
     <div class="container">
         <div class="head">
-    <h1>予定の追加</h1>
-        </div>
+        <h1>予定の追加</h1>
+      </div>
+
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+
     <form id="add_form" action="{{ url_for('add_schedule') }}" method="post">
         <label for="schedulename">予定の名前:</label>
         <input type="text" id="schedulename" name="schedulename" required><br><br>

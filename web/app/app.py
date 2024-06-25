@@ -1,6 +1,6 @@
 # web/app.py
 
-from flask import Flask, render_template, request, session, redirect,url_for, jsonify
+from flask import Flask, render_template, request, session, redirect,url_for, jsonify,flash
 from .db import get_users
 from .db import get_groupsschedule
 from .db import get_groupssetting, get_groupsschedule_by_group_id
@@ -8,7 +8,7 @@ from .db import groupssetting
 from .db import create_schedule
 def create_app():
     app = Flask(__name__)
-
+    app.secret_key = 's3cr3t_k3y_@123'
     @app.route('/')
     def hello():
         return render_template('index.html')
@@ -76,9 +76,12 @@ def create_app():
         groupnumber = request.form['groupnumber']
         studentnumber = request.form['studentnumber']
 
-        create_schedule(schedulename, date, groupnumber, studentnumber)
-        return redirect(url_for('calendar'))
-
+        try:
+            create_schedule(schedulename, date, groupnumber, studentnumber)
+            return redirect(url_for('calendar'))
+        except ValueError as e:
+            flash(str(e))
+            return redirect(url_for('add_schedule_form'))
 
     return app
 
