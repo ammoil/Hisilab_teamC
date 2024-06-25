@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>予定の追加</title>
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <h1>予定の追加</h1>
+    <div class="container">
+        <div class="head">
+        <h1>予定の追加</h1>
+      </div>
+
 
     {% with messages = get_flashed_messages() %}
       {% if messages %}
@@ -18,24 +23,26 @@
       {% endif %}
     {% endwith %}
 
+
     <form id="add_form" action="{{ url_for('add_schedule') }}" method="post">
         <label for="schedulename">予定の名前:</label>
         <input type="text" id="schedulename" name="schedulename" required><br><br>
 
-        <label for="date">日時:</label>
+        <label for="date">　　　日時:</label>
         <input type="datetime-local" id="date" name="date" required><br><br>
 
-        <label for="groupnumber">グループの名前:</label>
+        <label for="groupnumber">グループ名:</label>
         <select id="groupnumber" name="groupnumber" required>
             {% for group in groups %}
             <option value="{{ group['id'] }}">{{ group['groupname'] }}</option>
             {% endfor %}
         </select><br><br>
 
-        <label for="studentnumber">学籍番号:</label>
+        <label for="studentnumber">　学籍番号:</label>
         <input type="text" id="studentnumber" name="studentnumber" required><br><br>
 
         <button type="submit">登録</button>
     </form>
+</div>
 </body>
 </html>
