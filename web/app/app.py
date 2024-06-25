@@ -8,7 +8,7 @@ from .db import groupssetting
 from .db import create_schedule
 def create_app():
     app = Flask(__name__)
-
+    app.secret_key = 's3cr3t_k3y_@123'
     @app.route('/')
     def hello():
         return render_template('index.html')
