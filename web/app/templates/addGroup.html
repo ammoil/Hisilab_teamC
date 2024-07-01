@@ -4,26 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width", initial-scale="1.0">
     <title>addGroup</title>
+    <link rel="stylesheet" href="/static/css/style3.css">
 </head>
 <body>
-   
-    <h1>グループの作成</h1>
+
+    <div class="container">
+        <div class="head">
+        <h1>グループの作成</h1>
+    </div>
 
     <!-- グループ作成フォーム -->
     <form method="post" action="/groupssetting">
         <div class="form-group">
             <label for="group_name">グループ名:</label>
             <input type="text" id="group_name" name="group_name" required>
-            <a>（NOT NULL）<a>
             <!--　required：フォームで入力必須であることを指定する-->
         </div>
-        <div class="create-button">
-            <button type="submit">作成</button>
-        </div>
+        <button type="submit">作成</button>
     </form>
+
+    <!--
     <div class="return-page">
         <a href="{{ url_for('calendar') }}">カレンダー画面に戻る</a>
     </div>
-
+    -->
 </body>
 </html>
