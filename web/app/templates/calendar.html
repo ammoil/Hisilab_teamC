@@ -9,6 +9,7 @@
 <body>
     <head>
         <form id="group-form" method="POST" action="/calendar">
+            <div class="des">
             <select name="group_id">
                 {% for group in my_dict.groups %}
                     <option value="{{ group.id }}">
@@ -16,7 +17,8 @@
                     </option>
                 {% endfor %}
             </select>
-            <button type="submit">Submit</button>
+        </div>
+            <button type="submit" class="btn">Submit</button>
         </form>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.css">
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.js"></script>
@@ -44,9 +46,11 @@
         });
         </script>
     </body>
-
-    <a href="/add_group">グループを作成する</a>
-    <a href="/add_schedule">スケジュールを追加する</a>
+<br><br>
+    <a href="/add_group" class="btn2">グループを作成する</a>
+    <br><br><br>
+    <a href="/add_schedule" class="btn2">スケジュールを追加する</a>
+    <br><br>
 </body>
 </html>
 
